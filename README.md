@@ -1,4 +1,4 @@
-# ☑️Temperature-control-using-Fuzzy-logic
+# ☑️PID and Fuzzy logic for temperature control
 This set of scripts uses Fuzzy logic and PID to maintain a temperature in an environment. Plans to add MPC in the future.
 
 ## ❇️Features
