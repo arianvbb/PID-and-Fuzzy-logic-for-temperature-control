@@ -1,27 +1,32 @@
-import random
+import matplotlib.pyplot as plt
+import Fuzzy
+import PID
 
-class Furnace:
-    def __init__(self, temperature = 0.0, ambient = None, heater_gain = 2.0, loss_coeff = 0.08): # Creating an instance with variable values.
+MPC_temp = []
 
-        self.temperature = temperature
-        self.ambient = ambient
-        self.heater_gain = heater_gain
-        self.loss_coeff = loss_coeff
+Fuzzy.Fuzzy_run()
+PID.PID_run()
 
-    # This will run every time the temperature changes, it uses an ODE equation to calculate temperature gain based on the ambient temperature, loss_coefficient and the power given considering a 2,0 set heater_gain
-    def step(self, power, ambient = None, dt = 1.0):
-        if ambient is not None:
-            self.ambient = ambient
-        power = max(0.0, min(1.0, power))
+figure, axes = plt.subplots(2, 1, figsize = (18, 10), dpi = 120)
+figure.suptitle("Different temperature controls")
 
-        # Adding something that accounts for the door occasionally opening up.
-        door = 1
-        if random.random() < 0.02: # 2% Chance
-            door = max(1.0, random.gauss(3, 0.5))
-        else:
-            door = 1
+axes[0].plot(PID.Time, PID.PID_temp)
+axes[0].set_title("PID")
+axes[0].axhline(21, color = "red")
+axes[0].set_xlabel("Time") 
+axes[0].set_ylabel("Temperature")
 
-        dTdt = self.heater_gain * power - self.loss_coeff * door * (self.temperature - self.ambient)
-        self.temperature += dTdt * dt
+axes[1].plot(Fuzzy.Time, Fuzzy.Fuzzy_temp)
+axes[1].set_title("Fuzzy")
+axes[1].axhline(21, color = "red")
+axes[1].set_xlabel("Time") 
+axes[1].set_ylabel("Temperature")
 
-        return self.temperature
+#axes[2].plot(MPC.Time, MPC_temp)
+#axes[2].set_title("MPC")
+#axes[2].axhline(21, color = "red")
+#axes[2].set_xlabel("Time") 
+#axes[2].set_ylabel("Temperature")
+
+plt.tight_layout()
+plt.show()
