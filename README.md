@@ -4,6 +4,7 @@ This set of scripts uses Fuzzy logic and PID to maintain a temperature in an env
 ## ❇️Features
 - **Fuzzy logic**: A fairly simple implementation of Fuzzy logic to get input on how much to heat at each given time.
 - **PID**: Standard usage of PID, it uses the current, past and future to give an output of how much to heat to remain at the ideal temperature.
+- **Furnace**: A furnace script including an ODE equation, door factor amonst other things that can be ran with the control systems.
 - **Graph**: Matplotlib is used to graph all temperatures giving you an idea of where the temperature stays at over time.
 
 #### This project was made entirely in Python.
@@ -32,8 +33,8 @@ A big takeaway from this is that planning plays a huge role, rather spend a few 
 
 ## 🚀Running the project 
 
-1. Install the main.py, fuzzy.py and PID.py
-2. Using an editor and Python installed you open all three in the same folder and then run the fuzzy or PID file depending on which control logic you wanna use.
+1. Install the main.py, furnace.py, fuzzy.py and PID.py
+2. Using an editor and Python installed you open all three in the same folder and then run the main file.
 
 ## 🍿Video
 
