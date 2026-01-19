@@ -1,9 +1,9 @@
-from main import Furnace
+from furnace import Furnace
 import math
 import matplotlib.pyplot as plt
 
-Temperatures = []
 Time = []
+Fuzzy_temp = []
 
 class Fuzzy:
     def __init__(self, furnace, ideal_temperature = 21):
@@ -74,16 +74,10 @@ class Fuzzy:
 
 fuzzy = Fuzzy(Furnace(), ideal_temperature = 21)
 
-for t in range (100):
-    fuzzy.furnace.ambient = 12 + 4.0 * math.sin(2* math.pi * t / 24) # Makes a sin-wave out of the ambience temperature so it isn't constant. This program counts 1 rotation as an hour therefor this sin-wave accounts for night and day rotation.
-    fuzzy.process()
-    Time.append(t)
-    Temperatures.append(fuzzy.furnace.temperature)
-    print(f"Step {t}: {fuzzy.furnace.temperature:.2f}°C") #Prints the temperature with 2 decimals every hour.
-
-# Plots the collected data.
-plt.plot(Time, Temperatures)
-plt.xlabel("Time (h)")
-plt.ylabel("Temperatures (C)")
-plt.axhline(21, color = 'red', label = "Ideal_temp")
-plt.show()    
+def Fuzzy_run():
+    for t in range (100):
+        fuzzy.furnace.ambient = 12 + 4.0 * math.sin(2* math.pi * t / 24) # Makes a sin-wave out of the ambience temperature so it isn't constant. This program counts 1 rotation as an hour therefor this sin-wave accounts for night and day rotation.
+        fuzzy.process()
+        Time.append(t)
+        Fuzzy_temp.append(fuzzy.furnace.temperature)
+        print(f"Step {t}: {fuzzy.furnace.temperature:.2f}°C") #Prints the temperature with 2 decimals every hour.
