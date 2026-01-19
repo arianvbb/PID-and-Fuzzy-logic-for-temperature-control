@@ -14,6 +14,14 @@ class Furnace:
             self.ambient = ambient
         power = max(0.0, min(1.0, power))
 
-        dTdt = self.heater_gain * power - self.loss_coeff * (self.temperature - self.ambient)
+        # Adding something that accounts for the door occasionally opening up.
+        door = 1
+        if random.random() < 0.02: # 2% Chance
+            door = max(1.0, random.gauss(3, 0.5))
+        else:
+            door = 1
+
+        dTdt = self.heater_gain * power - self.loss_coeff * door * (self.temperature - self.ambient)
         self.temperature += dTdt * dt
+
         return self.temperature
