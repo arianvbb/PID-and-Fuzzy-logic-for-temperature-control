@@ -1,9 +1,12 @@
 from furnace import Furnace
 import math
-import matplotlib.pyplot as plt
+from rich.console import *
+from rich.table import *
 
 Time = []
 Fuzzy_temp = []
+Fuzzy_Energy_Usage = []
+Within_1 = []
 
 class Fuzzy:
     def __init__(self, furnace, ideal_temperature = 21):
@@ -70,14 +73,47 @@ class Fuzzy:
 
         power = ((none * No_Output) + (small * Low_Output) + (medium * Medium_Output) + (large * High_Output)) / denom if denom > 0 else 0
 
+        power = max(0.0, min(1.0, power))
+
+        Fuzzy_Energy_Usage.append(power)
+
         self.furnace.step(power)
 
 fuzzy = Fuzzy(Furnace(), ideal_temperature = 21)
 
 def Fuzzy_run():
+
+    warm_up = 15
+    highest_temp = 22
+    lowest_temp = 20
+
     for t in range (100):
         fuzzy.furnace.ambient = 12 + 4.0 * math.sin(2* math.pi * t / 24) # Makes a sin-wave out of the ambience temperature so it isn't constant. This program counts 1 rotation as an hour therefor this sin-wave accounts for night and day rotation.
         fuzzy.process()
         Time.append(t)
         Fuzzy_temp.append(fuzzy.furnace.temperature)
-        print(f"Step {t}: {fuzzy.furnace.temperature:.2f}°C") #Prints the temperature with 2 decimals every hour.
+
+        if t > warm_up:
+
+            temp = fuzzy.furnace.temperature
+
+            if temp > highest_temp:
+                highest_temp = temp
+            elif temp < lowest_temp:
+                lowest_temp = temp
+
+            if 20 < temp < 22:
+                Within_1.append(1)
+
+    console = Console()
+
+    table = Table(title = "Fuzzy")
+    table.add_column("Metrics", style = "cyan")
+    table.add_column("Data", style = "cyan")
+
+    table.add_row("Average Output (%)", f"{((sum(Fuzzy_Energy_Usage)) / 100):.2f}")
+    table.add_row("Within 1 degree (C)", f"{(sum(Within_1) / (100 - warm_up)):.2f}")
+    table.add_row("Highest temp (C)", f"{highest_temp:.2f}")
+    table.add_row("Lowest temp (C)", f"{lowest_temp:.2f}")
+
+    console.print(table)
