@@ -6,8 +6,9 @@ This set of scripts uses Fuzzy logic and PID to maintain a temperature in an env
 - **PID**: Standard usage of PID, it uses the current, past and future to give an output of how much to heat to remain at the ideal temperature.
 - **Furnace**: A furnace script including an ODE equation, door factor amonst other things that can be ran with the control systems.
 - **Graph**: Matplotlib is used to graph all temperatures giving you an idea of where the temperature stays at over time.
+- **Metrics and tables**: I used the rich library to display certain metrics about each control system, such as highest and lowest temp, % of time within 1.0 degrees celcius, etc.
 
-#### This project was made entirely in Python.
+#### This project was made entirely in Python with these following libraries: Rich, random, matplotlib and math.
 
 ## 🤔The Process 
 
@@ -25,11 +26,17 @@ After this I decided to work on PID, in my case the PID logic was pretty straigh
 
 It took a video or two on PID logic and how it works but it was just fine, I have asperations to add an AI to later find the ideal values for this very example.
 
+Adding metrics was fairly simple, for the moment being the metrics I have included are essential and easy to code and compute.
+
 ## 📚My takeaways 
 
 I got to use plotting now which was fun, I feel like I've gotten real understanding of a real control system concept, the Fuzzy control system which is incredibly motivating.
 
 A big takeaway from this is that planning plays a huge role, rather spend a few minutes deciding how you're gonna program instead of just starting, it's often a big time saver.
+
+After figorous attempts I figured out PID aswell, which was simpler when you actually understand it but coding the maths into Python was a little challenging at first.
+
+I learnt the very basics of rich and making tables.
 
 ## 🚀Running the project 
 
