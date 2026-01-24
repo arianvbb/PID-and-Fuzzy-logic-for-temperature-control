@@ -12,7 +12,6 @@ class Furnace:
     def step(self, power, ambient = None, dt = 1.0):
         if ambient is not None:
             self.ambient = ambient
-        power = max(0.0, min(1.0, power))
 
         # Adding something that accounts for the door occasionally opening up.
         door = 1
@@ -23,4 +22,5 @@ class Furnace:
 
         dTdt = self.heater_gain * power - self.loss_coeff * door * (self.temperature - self.ambient)
         self.temperature += dTdt * dt
+
         return self.temperature
