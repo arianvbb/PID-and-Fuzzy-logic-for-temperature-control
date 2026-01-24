@@ -44,4 +44,4 @@ I learnt the very basics of rich and making tables.
 2. Using an editor and Python installed you open all three in the same folder and then run the main file.
 
 ## 🍿Video
-
+https://github.com/user-attachments/assets/29058bfb-8295-4ed3-b8bf-ca9b3ffa9e57
